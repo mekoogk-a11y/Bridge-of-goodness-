@@ -8,6 +8,13 @@ export type PageId =
   | 'mission'
   | 'philosophy'
   | 'bridge-model'
+  | 'education'
+  | 'health'
+  | 'relief'
+  | 'youth'
+  | 'food'
+  | 'water'
+  | 'social'
   | 'area-education'
   | 'area-health'
   | 'area-relief'
@@ -18,19 +25,23 @@ export type PageId =
   | 'south-sudan'
   | 'map'
   | 'communities'
+  | 'initiatives'
+  | 'projects'
   | 'articles'
   | 'featured-article'
   | 'news'
   | 'hope-stories'
-  | 'initiatives'
   | 'partnerships'
   | 'volunteers'
   | 'advisors'
   | 'team'
   | 'concept-doc'
   | 'transparency'
-  | 'faq'
+  | 'donate'
   | 'contact'
+  | 'faq'
+  | 'resources'
+  | 'media'
   | 'privacy'
   | 'terms'
   | 'safeguarding'
@@ -152,13 +163,31 @@ export interface PartnershipInquiry {
   status: 'Pending Review' | 'Reviewed';
 }
 
+export interface DonationNotification {
+  id: string;
+  name: string;
+  amount: string;
+  transferDate: string;
+  referenceNumber: string;
+  receiptName?: string;
+  receiptDataUrl?: string;
+  message?: string;
+  submittedAt: string;
+  status: 'Pending' | 'Verified' | 'Rejected';
+  adminNotes?: string;
+}
+
 export type AdminRole =
   | 'super_admin'
+  | 'administrator'
   | 'editor'
+  | 'finance_manager'
   | 'content_manager'
   | 'map_manager'
   | 'Super Admin'
+  | 'Administrator'
   | 'Editor'
+  | 'Finance Manager'
   | 'Content Manager'
   | 'Map Manager';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageId, Language } from '../types';
 import {
   INITIATIVE_INFO,
@@ -24,8 +24,12 @@ import {
   Sprout,
   Droplets,
   Users,
-  ChevronRight,
-  FileText
+  FileText,
+  Heart,
+  Building2,
+  Copy,
+  Check,
+  AlertCircle
 } from 'lucide-react';
 
 interface HomeViewProps {
@@ -35,6 +39,13 @@ interface HomeViewProps {
 
 export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
   const isEn = lang === 'en';
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyAccount = () => {
+    navigator.clipboard.writeText(INITIATIVE_INFO.donation.accountNumber);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 3000);
+  };
 
   const getAreaIcon = (iconName: string) => {
     switch (iconName) {
@@ -51,9 +62,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* 1. HERO SECTION: Cinematic, Dignified, High Impact */}
+      {/* 1. HERO SECTION: Cinematic, Authentic, Dignified */}
       <section className="relative min-h-[85vh] flex items-center justify-center text-white overflow-hidden bg-[#092B3A]">
-        {/* Background Image of South Sudan Riverine Landscape with layered gradients */}
+        {/* Background Image of South Sudan Landscape */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-1000"
           style={{
@@ -61,67 +72,71 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
           }}
         />
 
-        {/* Multi-layered cinematic gradient overlays for pristine readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#092B3A] via-[#092B3A]/80 to-[#092B3A]/60" />
+        {/* Multi-layered cinematic gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#092B3A] via-[#092B3A]/85 to-[#092B3A]/65" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#092B3A]/90 via-transparent to-[#092B3A]/80" />
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          {/* Legal Status Badge */}
+          {/* Status Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#159A72]/25 border border-[#159A72]/60 text-xs sm:text-sm font-bold text-[#E6F7F2] mb-6 backdrop-blur-md shadow-md animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-[#F2B84B] animate-ping" />
             <span>{isEn ? INITIATIVE_INFO.legalStatusBadgeEn : INITIATIVE_INFO.legalStatusBadgeAr}</span>
           </div>
 
-          {/* Main Title */}
+          {/* Headline */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.2] drop-shadow-md">
             {isEn ? INITIATIVE_INFO.taglineEn : INITIATIVE_INFO.taglineAr}
           </h1>
 
-          {/* Subtitle in other language */}
+          {/* Secondary Slogan Line */}
           <p className="mt-4 text-base sm:text-lg md:text-xl font-medium text-[#F2B84B] tracking-wide max-w-3xl mx-auto">
             {isEn ? INITIATIVE_INFO.taglineAr : INITIATIVE_INFO.taglineEn}
           </p>
 
-          {/* Explanatory Body */}
+          {/* Supporting Text */}
           <p className="mt-6 text-sm sm:text-base md:text-lg text-[#F8FAFC]/90 max-w-3xl mx-auto leading-relaxed font-normal">
             {isEn ? INITIATIVE_INFO.heroDescriptionEn : INITIATIVE_INFO.heroDescriptionAr}
           </p>
 
-          {/* Hero Action Buttons */}
+          {/* Hero 3 Action Buttons: اكتشف المبادرة | تبرع الآن | كن شريكاً */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            {/* 1. اكتشف المبادرة */}
             <button
               onClick={() => onNavigate('about')}
               className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#087EA4] to-[#159A72] hover:brightness-110 active:scale-95 font-bold text-white shadow-xl transition-all flex items-center gap-2"
             >
-              <span>{isEn ? 'Discover the Initiative' : 'اكتشف المبادرة'}</span>
+              <span>{isEn ? 'Explore BGI' : 'اكتشف المبادرة'}</span>
               {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
             </button>
 
+            {/* 2. تبرع الآن */}
             <button
-              onClick={() => onNavigate('vision')}
-              className="px-7 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 active:scale-95 font-bold text-white border border-white/20 backdrop-blur-md transition-all"
+              onClick={() => onNavigate('donate')}
+              className="group px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#F2B84B] via-amber-300 to-[#F2B84B] hover:brightness-105 active:scale-95 font-black text-slate-950 shadow-xl shadow-amber-500/20 border border-amber-300 transition-all flex items-center gap-2"
             >
-              {isEn ? 'Our Vision' : 'رؤيتنا'}
+              <Heart className="w-4 h-4 fill-current text-rose-600 group-hover:scale-110 transition-transform" />
+              <span>{isEn ? 'DONATE NOW' : 'تبرع الآن'}</span>
             </button>
 
+            {/* 3. كن شريكاً */}
             <button
               onClick={() => onNavigate('partnerships')}
-              className="px-7 py-3.5 rounded-2xl bg-[#F2B84B] hover:bg-[#F2B84B]/90 active:scale-95 font-bold text-[#092B3A] shadow-lg transition-all flex items-center gap-2"
+              className="px-7 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 active:scale-95 font-bold text-white border border-white/20 backdrop-blur-md transition-all flex items-center gap-2"
             >
               <HeartHandshake className="w-4 h-4" />
-              <span>{isEn ? 'Be a Future Partner' : 'كن شريكاً مستقبلاً'}</span>
+              <span>{isEn ? 'Partner with Us' : 'كن شريكاً'}</span>
             </button>
           </div>
 
-          {/* Representative Imagery Tag */}
+          {/* Authentic Imagery Note */}
           <div className="mt-12 text-[11px] text-white/50 tracking-wider">
             {isEn ? INITIATIVE_INFO.disclaimerIllustrationEn : INITIATIVE_INFO.disclaimerIllustrationAr}
           </div>
         </div>
       </section>
 
-      {/* 2. MISSION SECTION: High Contrast, Dignified */}
+      {/* 2. MISSION SECTION: High Contrast */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="bg-gradient-to-br from-[#092B3A] to-[#104156] text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-[#087EA4]/40 relative overflow-hidden">
           <div className="w-12 h-12 rounded-2xl bg-[#F2B84B]/20 border border-[#F2B84B]/40 flex items-center justify-center text-[#F2B84B] mx-auto mb-4">
@@ -141,7 +156,114 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
         </div>
       </section>
 
-      {/* 4. BRIDGE PHILOSOPHY: From Need to Opportunity */}
+      {/* 3. MAJOR DONATION SECTION: ❤️ ساهم في صناعة الخير */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-[#092B3A] via-[#0D384C] to-[#092B3A] rounded-3xl p-8 md:p-12 border border-amber-400/30 text-white shadow-2xl relative overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left/Intro Column */}
+            <div className="lg:col-span-7 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-bold uppercase tracking-wider">
+                <Heart className="w-3.5 h-3.5 fill-current text-rose-400" />
+                <span>{isEn ? 'Contribute to Goodness' : '❤️ ساهم في صناعة الخير'}</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">
+                {isEn ? 'Contribute to Goodness' : 'ساهم في صناعة الخير وبناء الجسور'}
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl">
+                {isEn ? INITIATIVE_INFO.donation.descriptionEn : INITIATIVE_INFO.donation.descriptionAr}
+              </p>
+
+              <div className="pt-2 flex flex-wrap gap-4">
+                <button
+                  onClick={() => onNavigate('donate')}
+                  className="px-6 py-3 rounded-2xl bg-gradient-to-r from-[#F2B84B] to-amber-400 hover:brightness-110 active:scale-95 text-slate-900 font-black text-xs sm:text-sm shadow-lg flex items-center gap-2 transition-all"
+                >
+                  <Heart className="w-4 h-4 fill-current text-rose-600" />
+                  <span>{isEn ? 'Go to Donation Center' : 'صفحة التبرع الكاملة وإشعار التحويل'}</span>
+                  {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+                </button>
+
+                <button
+                  onClick={() => onNavigate('transparency')}
+                  className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold border border-white/10 transition-colors"
+                >
+                  {isEn ? 'Transparency & Safeguarding' : 'ميثاق الأمانة والشفافية'}
+                </button>
+              </div>
+            </div>
+
+            {/* Right/Card Column: Bank of Khartoum details */}
+            <div className="lg:col-span-5 bg-[#051A24]/90 rounded-2xl p-6 md:p-8 border border-amber-400/40 shadow-2xl space-y-5 backdrop-blur-md">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
+                  <Building2 className="w-4 h-4 text-[#F2B84B]" />
+                  <span>{isEn ? 'Current Donation Method' : 'طريقة التحويل المعتمدة'}</span>
+                </div>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 font-bold border border-emerald-500/30">
+                  {isEn ? 'Direct Bank Transfer' : 'تحويل بنكي رسمي'}
+                </span>
+              </div>
+
+              <div>
+                <p className="text-xs text-slate-400">
+                  {isEn ? 'Bank Name' : 'اسم البنك'}
+                </p>
+                <p className="text-lg font-bold text-white">
+                  {isEn ? INITIATIVE_INFO.donation.bankNameEn : INITIATIVE_INFO.donation.bankNameAr}
+                </p>
+              </div>
+
+              {/* Large Account Number Card */}
+              <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-[11px] text-[#F2B84B] font-bold block mb-1">
+                    {isEn ? 'Account Number' : 'رقم الحساب'}
+                  </span>
+                  <span className="font-mono text-2xl sm:text-3xl font-black text-[#F2B84B] tracking-wider">
+                    {INITIATIVE_INFO.donation.accountNumber}
+                  </span>
+                </div>
+
+                <button
+                  onClick={handleCopyAccount}
+                  className="px-4 py-2.5 rounded-xl bg-[#F2B84B] hover:bg-amber-300 text-slate-900 font-bold text-xs transition-all flex items-center gap-1.5 shrink-0 shadow-md active:scale-95"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4 text-emerald-800 stroke-[3]" />
+                      <span className="text-emerald-950 font-black">{isEn ? 'Copied!' : 'تم النسخ'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span>{isEn ? 'Copy' : 'نسخ رقم الحساب'}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Success Notification Alert */}
+              {copied && (
+                <div className="p-2.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs font-bold text-center animate-in fade-in">
+                  ✓ {isEn ? 'Account number copied successfully to clipboard!' : 'تم نسخ رقم الحساب بنجاح'}
+                </div>
+              )}
+
+              {/* Verification Mandatory Notice */}
+              <div className="flex items-start gap-2 text-xs text-amber-200/90 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20">
+                <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <p className="leading-relaxed">
+                  {isEn ? INITIATIVE_INFO.donation.verifyNoticeEn : INITIATIVE_INFO.donation.verifyNoticeAr}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. THE BRIDGE MODEL: From Need to Opportunity */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <BridgePhilosophy isEn={isEn} />
       </section>
@@ -180,7 +302,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
               key={area.id}
               className="bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group"
             >
-              {/* Card Image with Watermark */}
+              {/* Card Image */}
               <div className="relative h-48 overflow-hidden bg-slate-100">
                 <img
                   src={area.imageUrl}
@@ -314,7 +436,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
         </div>
       </section>
 
-      {/* 8. PROPOSED FUTURE INITIATIVES (Bridge Projects) */}
+      {/* 8. PROPOSED FUTURE INITIATIVES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#159A72]/10 text-[#159A72] text-xs font-bold uppercase tracking-wider mb-2">

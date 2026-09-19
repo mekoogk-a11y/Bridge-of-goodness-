@@ -1,0 +1,6 @@
+{
+  "name": "مبادرة جسور الخير | Bridges of Goodness Initiative",
+  "description": "مبادرة تأسيسية قيد التطوير تهدف إلى بناء جسور بين الإنسان والفرصة، من خلال رؤية مستقبلية في التعليم والصحة والإغاثة والتمكين والتنمية في جنوب السودان.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

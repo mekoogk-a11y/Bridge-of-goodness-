@@ -316,16 +316,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               {isEn ? 'Partnerships' : 'الشراكات'}
             </button>
 
-            {/* Donate Navigation Link */}
+            {/* Volunteer Navigation Link */}
             <button
-              onClick={() => navigateTo('donate')}
+              onClick={() => navigateTo('volunteers')}
               className={`px-2.5 py-2 rounded-xl transition-colors ${
-                currentPage === 'donate'
+                currentPage === 'volunteers'
                   ? 'bg-[#159A72] text-white font-bold'
                   : 'text-slate-200 hover:text-white hover:bg-white/10'
               }`}
             >
-              {isEn ? 'Donate' : 'التبرع'}
+              {isEn ? 'Volunteer' : 'التطوع'}
             </button>
 
             {/* Contact */}
@@ -357,24 +357,24 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hidden xl:inline">{isEn ? 'Admin' : 'الإدارة'}</span>
             </button>
 
-            {/* HIGHLY VISIBLE "DONATE NOW" CTA */}
+            {/* VOLUNTEER CTA BUTTON */}
             <button
-              onClick={() => navigateTo('donate')}
+              onClick={() => navigateTo('volunteers')}
               className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-xs md:text-sm text-slate-900 bg-gradient-to-r from-[#F2B84B] via-[#ffd27a] to-[#F2B84B] hover:brightness-105 active:scale-95 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 border border-amber-300 transition-all duration-300"
             >
-              <Heart className="w-4 h-4 fill-current text-rose-600 group-hover:scale-110 transition-transform" />
-              <span>{isEn ? 'DONATE NOW' : 'تبرع الآن'}</span>
+              <Users className="w-4 h-4 text-slate-950 group-hover:scale-110 transition-transform" />
+              <span>{isEn ? 'VOLUNTEER WITH US' : 'تطوع معنا'}</span>
             </button>
           </div>
 
-          {/* Mobile Bar Right: Fast Donate + Menu Trigger */}
+          {/* Mobile Bar Right: Fast Volunteer + Menu Trigger */}
           <div className="flex items-center gap-2 2xl:hidden">
             <button
-              onClick={() => navigateTo('donate')}
+              onClick={() => navigateTo('volunteers')}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-black text-xs text-slate-900 bg-[#F2B84B] shadow-md border border-amber-300 active:scale-95"
             >
-              <Heart className="w-3.5 h-3.5 fill-current text-rose-600" />
-              <span>{isEn ? 'Donate' : 'تبرع'}</span>
+              <Users className="w-3.5 h-3.5 text-slate-950" />
+              <span>{isEn ? 'Volunteer' : 'تطوع'}</span>
             </button>
 
             <a
@@ -404,11 +404,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Top Quick Actions in Mobile Drawer */}
           <div className="grid grid-cols-2 gap-3 pb-4 border-b border-white/10">
             <button
-              onClick={() => navigateTo('donate')}
+              onClick={() => navigateTo('volunteers')}
               className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#F2B84B] to-amber-400 text-slate-900 font-black text-xs flex items-center justify-center gap-2 shadow-lg"
             >
-              <Heart className="w-4 h-4 fill-current text-rose-600" />
-              <span>{isEn ? 'DONATE NOW' : 'تبرع الآن'}</span>
+              <Users className="w-4 h-4 text-slate-950" />
+              <span>{isEn ? 'VOLUNTEER WITH US' : 'تطوع معنا'}</span>
             </button>
 
             <a

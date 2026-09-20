@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PageId, Language } from '../types';
 import {
   INITIATIVE_INFO,
@@ -10,6 +10,7 @@ import {
 } from '../data/contentData';
 import { SouthSudanMap } from '../components/SouthSudanMap';
 import { BridgePhilosophy } from '../components/BridgePhilosophy';
+import { SudaneseVoicePromo } from '../components/SudaneseVoicePromo';
 import {
   ArrowRight,
   ArrowLeft,
@@ -26,9 +27,8 @@ import {
   Users,
   FileText,
   Heart,
-  Building2,
-  Copy,
-  Check,
+  MessageCircle,
+  ExternalLink,
   AlertCircle
 } from 'lucide-react';
 
@@ -39,13 +39,6 @@ interface HomeViewProps {
 
 export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
   const isEn = lang === 'en';
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyAccount = () => {
-    navigator.clipboard.writeText(INITIATIVE_INFO.donation.accountNumber);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
-  };
 
   const getAreaIcon = (iconName: string) => {
     switch (iconName) {
@@ -99,7 +92,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
             {isEn ? INITIATIVE_INFO.heroDescriptionEn : INITIATIVE_INFO.heroDescriptionAr}
           </p>
 
-          {/* Hero 3 Action Buttons: اكتشف المبادرة | تبرع الآن | كن شريكاً */}
+          {/* Hero 3 Action Buttons: اكتشف المبادرة | تطوع معنا | كن شريكاً */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             {/* 1. اكتشف المبادرة */}
             <button
@@ -110,13 +103,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
               {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
             </button>
 
-            {/* 2. تبرع الآن */}
+            {/* 2. تطوع معنا */}
             <button
-              onClick={() => onNavigate('donate')}
+              onClick={() => onNavigate('volunteers')}
               className="group px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#F2B84B] via-amber-300 to-[#F2B84B] hover:brightness-105 active:scale-95 font-black text-slate-950 shadow-xl shadow-amber-500/20 border border-amber-300 transition-all flex items-center gap-2"
             >
-              <Heart className="w-4 h-4 fill-current text-rose-600 group-hover:scale-110 transition-transform" />
-              <span>{isEn ? 'DONATE NOW' : 'تبرع الآن'}</span>
+              <Users className="w-4 h-4 text-slate-950 group-hover:scale-110 transition-transform" />
+              <span>{isEn ? 'VOLUNTEER WITH US' : 'تطوع معنا'}</span>
             </button>
 
             {/* 3. كن شريكاً */}
@@ -156,107 +149,123 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
         </div>
       </section>
 
-      {/* 3. MAJOR DONATION SECTION: ❤️ ساهم في صناعة الخير */}
+      {/* 3. ENGAGEMENT & VOLUNTEER SECTION: 🤝 شارك في صناعة الأثر */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#092B3A] via-[#0D384C] to-[#092B3A] rounded-3xl p-8 md:p-12 border border-amber-400/30 text-white shadow-2xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#092B3A] via-[#0D384C] to-[#092B3A] rounded-3xl p-8 md:p-12 border border-[#F2B84B]/30 text-white shadow-2xl relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left/Intro Column */}
             <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-bold uppercase tracking-wider">
-                <Heart className="w-3.5 h-3.5 fill-current text-rose-400" />
-                <span>{isEn ? 'Contribute to Goodness' : '❤️ ساهم في صناعة الخير'}</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#159A72]/20 text-emerald-300 border border-[#159A72]/40 text-xs font-bold uppercase tracking-wider">
+                <HeartHandshake className="w-3.5 h-3.5 text-[#F2B84B]" />
+                <span>{isEn ? 'Civic Engagement' : '🤝 شارك في صناعة الأثر'}</span>
               </div>
 
               <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">
-                {isEn ? 'Contribute to Goodness' : 'ساهم في صناعة الخير وبناء الجسور'}
+                {isEn ? 'Building Bridges Through Knowledge & Solidarity' : 'نبني الجسور معاً بسواعد المتطوعين والشراكات'}
               </h2>
 
               <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl">
-                {isEn ? INITIATIVE_INFO.donation.descriptionEn : INITIATIVE_INFO.donation.descriptionAr}
+                {isEn
+                  ? 'Bridges of Goodness is founded on human solidarity and community empowerment. We believe the true foundation of sustainable development lies in knowledge transfer, local capacity building, and collaborative partnerships.'
+                  : 'تقوم مبادرة جسور الخير على مبدأ التضامن الإنساني والاستثمار في الإنسان. نؤمن بأن التغيير الحقيقي والمستدام يبدأ بتضافر الجهود المعرفية وتدريب الكوادر المحلية وفتح آفاق الشراكة مع المجتمع المدني والخبراء.'}
               </p>
 
               <div className="pt-2 flex flex-wrap gap-4">
                 <button
-                  onClick={() => onNavigate('donate')}
+                  onClick={() => onNavigate('volunteers')}
                   className="px-6 py-3 rounded-2xl bg-gradient-to-r from-[#F2B84B] to-amber-400 hover:brightness-110 active:scale-95 text-slate-900 font-black text-xs sm:text-sm shadow-lg flex items-center gap-2 transition-all"
                 >
-                  <Heart className="w-4 h-4 fill-current text-rose-600" />
-                  <span>{isEn ? 'Go to Donation Center' : 'صفحة التبرع الكاملة وإشعار التحويل'}</span>
+                  <Users className="w-4 h-4 text-slate-950" />
+                  <span>{isEn ? 'Join as a Volunteer' : 'انضم كمتطوع متخصص'}</span>
                   {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
                 </button>
 
                 <button
-                  onClick={() => onNavigate('transparency')}
-                  className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold border border-white/10 transition-colors"
+                  onClick={() => onNavigate('partnerships')}
+                  className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold border border-white/10 transition-colors flex items-center gap-2"
                 >
-                  {isEn ? 'Transparency & Safeguarding' : 'ميثاق الأمانة والشفافية'}
+                  <HeartHandshake className="w-4 h-4 text-emerald-400" />
+                  <span>{isEn ? 'Institutional Partnerships' : 'بناء الشراكات المؤسسية'}</span>
+                </button>
+
+                <button
+                  onClick={() => onNavigate('transparency')}
+                  className="px-4 py-3 rounded-2xl hover:bg-white/10 text-[#E8D8B8] text-xs font-semibold underline underline-offset-4 transition-colors"
+                >
+                  {isEn ? 'Our Ethics & Governance' : 'ميثاق النزاهة والشفافية'}
                 </button>
               </div>
             </div>
 
-            {/* Right/Card Column: Bank of Khartoum details */}
-            <div className="lg:col-span-5 bg-[#051A24]/90 rounded-2xl p-6 md:p-8 border border-amber-400/40 shadow-2xl space-y-5 backdrop-blur-md">
+            {/* Right/Card Column: Community & Direct Contact */}
+            <div className="lg:col-span-5 bg-[#051A24]/90 rounded-2xl p-6 md:p-8 border border-white/10 shadow-2xl space-y-5 backdrop-blur-md">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
-                  <Building2 className="w-4 h-4 text-[#F2B84B]" />
-                  <span>{isEn ? 'Current Donation Method' : 'طريقة التحويل المعتمدة'}</span>
+                  <Sparkles className="w-4 h-4 text-[#F2B84B]" />
+                  <span>{isEn ? 'Founding Collaboration' : 'مسارات التعاون التأسيسي'}</span>
                 </div>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 font-bold border border-emerald-500/30">
-                  {isEn ? 'Direct Bank Transfer' : 'تحويل بنكي رسمي'}
+                  {isEn ? 'Non-profit & Civic' : 'تطوعي وغير ربحي'}
                 </span>
               </div>
 
-              <div>
-                <p className="text-xs text-slate-400">
-                  {isEn ? 'Bank Name' : 'اسم البنك'}
-                </p>
-                <p className="text-lg font-bold text-white">
-                  {isEn ? INITIATIVE_INFO.donation.bankNameEn : INITIATIVE_INFO.donation.bankNameAr}
-                </p>
-              </div>
-
-              {/* Large Account Number Card */}
-              <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between gap-3">
-                <div>
-                  <span className="text-[11px] text-[#F2B84B] font-bold block mb-1">
-                    {isEn ? 'Account Number' : 'رقم الحساب'}
-                  </span>
-                  <span className="font-mono text-2xl sm:text-3xl font-black text-[#F2B84B] tracking-wider">
-                    {INITIATIVE_INFO.donation.accountNumber}
-                  </span>
+              <div className="space-y-3 text-xs text-slate-300">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-lg bg-[#087EA4]/20 border border-[#087EA4]/40 flex items-center justify-center shrink-0 text-[#087EA4]">
+                    <Users className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-0.5">
+                      {isEn ? 'Volunteer Opportunities' : 'التطوع التخصصي والميداني'}
+                    </h4>
+                    <p className="text-slate-400 leading-relaxed">
+                      {isEn
+                        ? 'Doctors, educators, agriculturalists, and water engineers sharing expertise.'
+                        : 'في مجالات التعليم، الصحة، التدريب المهني، والمسوحات الميدانية في جنوب السودان.'}
+                    </p>
+                  </div>
                 </div>
 
-                <button
-                  onClick={handleCopyAccount}
-                  className="px-4 py-2.5 rounded-xl bg-[#F2B84B] hover:bg-amber-300 text-slate-900 font-bold text-xs transition-all flex items-center gap-1.5 shrink-0 shadow-md active:scale-95"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-4 h-4 text-emerald-800 stroke-[3]" />
-                      <span className="text-emerald-950 font-black">{isEn ? 'Copied!' : 'تم النسخ'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4" />
-                      <span>{isEn ? 'Copy' : 'نسخ رقم الحساب'}</span>
-                    </>
-                  )}
-                </button>
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-lg bg-[#159A72]/20 border border-[#159A72]/40 flex items-center justify-center shrink-0 text-[#159A72]">
+                    <HeartHandshake className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-0.5">
+                      {isEn ? 'Strategic Alliances' : 'التحالفات الأكاديمية والمؤسسية'}
+                    </h4>
+                    <p className="text-slate-400 leading-relaxed">
+                      {isEn
+                        ? 'Partnering with universities, research institutes, and civil society organizations.'
+                        : 'التعاون مع المنظمات المجتمعية والجامعات لتطوير المبادرات الميدانية.'}
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Success Notification Alert */}
-              {copied && (
-                <div className="p-2.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs font-bold text-center animate-in fade-in">
-                  ✓ {isEn ? 'Account number copied successfully to clipboard!' : 'تم نسخ رقم الحساب بنجاح'}
-                </div>
-              )}
+              {/* Direct WhatsApp Callout */}
+              <div className="pt-2 border-t border-white/10">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[11px] text-[#F2B84B] font-bold block">
+                      {isEn ? 'Direct Dialogue' : 'التواصل المباشر مع فريق الفكرة:'}
+                    </span>
+                    <span className="font-mono text-xs text-white">
+                      {INITIATIVE_INFO.whatsapp.display}
+                    </span>
+                  </div>
 
-              {/* Verification Mandatory Notice */}
-              <div className="flex items-start gap-2 text-xs text-amber-200/90 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20">
-                <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                <p className="leading-relaxed">
-                  {isEn ? INITIATIVE_INFO.donation.verifyNoticeEn : INITIATIVE_INFO.donation.verifyNoticeAr}
-                </p>
+                  <a
+                    href={INITIATIVE_INFO.whatsapp.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-xl bg-[#159A72] hover:bg-[#128361] text-white font-bold text-xs transition-all flex items-center gap-1.5 shadow-md active:scale-95"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>{isEn ? 'WhatsApp' : 'محادثة فورية'}</span>
+                    <ExternalLink className="w-3 h-3 opacity-75" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -266,6 +275,11 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, lang }) => {
       {/* 4. THE BRIDGE MODEL: From Need to Opportunity */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <BridgePhilosophy isEn={isEn} />
+      </section>
+
+      {/* 4B. ENTHUSIASTIC PROMOTIONAL AUDIO: بصوت رجل بالعامية السودانية */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SudaneseVoicePromo isEn={isEn} />
       </section>
 
       {/* 5. 7 FUTURE ACTION AREAS CARDS */}

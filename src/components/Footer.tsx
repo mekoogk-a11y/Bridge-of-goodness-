@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Logo } from './Logo';
 import { PageId, Language } from '../types';
 import { INITIATIVE_INFO } from '../data/contentData';
 import {
   ShieldCheck,
   Heart,
-  Building2,
-  Copy,
-  Check,
+  Users,
+  HeartHandshake,
   MessageCircle,
   ExternalLink,
   ArrowUp,
@@ -22,13 +21,6 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, lang }) => {
   const isEn = lang === 'en';
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyAccount = () => {
-    navigator.clipboard.writeText(INITIATIVE_INFO.donation.accountNumber);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
-  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -37,7 +29,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, lang }) => {
   return (
     <footer className="bg-[#051A24] text-slate-300 pt-16 pb-12 border-t border-slate-800 relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Cards: Status + Donation Info + WhatsApp */}
+        {/* Top Cards: Status + Engagement Info + WhatsApp */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
           {/* 1. Legal Status & Mission */}
           <div className="bg-[#092B3A] rounded-2xl p-6 border border-[#087EA4]/30 space-y-3 shadow-lg">
@@ -58,53 +50,49 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, lang }) => {
             </div>
           </div>
 
-          {/* 2. Official Bank of Khartoum Donation */}
-          <div className="bg-gradient-to-br from-[#092B3A] to-[#0D384C] rounded-2xl p-6 border border-amber-500/30 space-y-3 shadow-lg relative overflow-hidden">
+          {/* 2. Engagement & Community Partnership */}
+          <div className="bg-gradient-to-br from-[#092B3A] to-[#0D384C] rounded-2xl p-6 border border-[#F2B84B]/30 space-y-3 shadow-lg relative overflow-hidden">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-wider">
-                <Building2 className="w-4 h-4 text-[#F2B84B]" />
-                <span>{isEn ? 'Official Donation Account' : 'حساب التبرع المعتمد'}</span>
+                <HeartHandshake className="w-4 h-4 text-[#F2B84B]" />
+                <span>{isEn ? 'Partnership & Volunteerism' : 'الشراكات والعمل التطوعي'}</span>
               </div>
               <button
-                onClick={() => onNavigate('donate')}
-                className="text-[11px] px-2.5 py-1 rounded-lg bg-amber-400 text-slate-900 font-black hover:bg-amber-300 transition-colors"
+                onClick={() => onNavigate('volunteers')}
+                className="text-[11px] px-2.5 py-1 rounded-lg bg-[#F2B84B] text-slate-900 font-black hover:bg-amber-300 transition-colors"
               >
-                {isEn ? 'Donate' : 'تبرع'}
+                {isEn ? 'Join Us' : 'انضم إلينا'}
               </button>
             </div>
 
             <div>
-              <p className="text-xs text-slate-300">
-                {isEn ? INITIATIVE_INFO.donation.bankNameEn : INITIATIVE_INFO.donation.bankNameAr}
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {isEn
+                  ? 'BGI invites passionate professionals, grassroots community leaders, and institutional partners to shape human development together.'
+                  : 'تفتح المبادرة أبوابها للكفاءات المتطوعة والشركاء المؤسسيين والجامعات للمساهمة المعرفية والتنموية في بناء الإنسان.'}
               </p>
-              <div className="flex items-center justify-between gap-2 mt-1">
-                <span className="font-mono text-xl font-black text-[#F2B84B] tracking-wider">
-                  {INITIATIVE_INFO.donation.accountNumber}
-                </span>
+              <div className="flex items-center gap-3 mt-3">
                 <button
-                  onClick={handleCopyAccount}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold transition-all active:scale-95"
-                  title="نسخ رقم الحساب"
+                  onClick={() => onNavigate('volunteers')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all"
                 >
-                  {copied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-300 text-[10px]">
-                        {isEn ? 'Copied' : 'تم النسخ'}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>{isEn ? 'Copy' : 'نسخ'}</span>
-                    </>
-                  )}
+                  <Users className="w-3.5 h-3.5 text-[#F2B84B]" />
+                  <span>{isEn ? 'Volunteer Hub' : 'سجل اهتمامك بالتطوع'}</span>
+                </button>
+                <button
+                  onClick={() => onNavigate('partnerships')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-900/60 hover:bg-emerald-800/80 text-emerald-200 text-xs font-bold border border-emerald-500/30 transition-all"
+                >
+                  <HeartHandshake className="w-3.5 h-3.5" />
+                  <span>{isEn ? 'Partnerships' : 'آفاق الشراكة'}</span>
                 </button>
               </div>
             </div>
 
             <p className="text-[11px] text-amber-200/80 leading-tight">
-              {isEn ? INITIATIVE_INFO.donation.verifyNoticeEn : INITIATIVE_INFO.donation.verifyNoticeAr}
+              {isEn
+                ? 'A collaborative, non-profit founding initiative driven by community ownership and human solidarity.'
+                : 'مبادرة تأسيسية غير ربحية مبنية على ملكية المجتمع والتضامن الإنساني.'}
             </p>
           </div>
 
@@ -279,13 +267,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, lang }) => {
             </h5>
             <ul className="space-y-2">
               <li>
-                <button onClick={() => onNavigate('donate')} className="text-[#F2B84B] font-bold hover:underline">
-                  {isEn ? 'Donate' : 'التبرع المالي'}
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('volunteers')} className="hover:text-white transition-colors">
-                  {isEn ? 'Volunteer' : 'التطوع'}
+                <button onClick={() => onNavigate('volunteers')} className="text-[#F2B84B] font-bold hover:underline">
+                  {isEn ? 'Volunteer' : 'التطوع وبناء الإنسان'}
                 </button>
               </li>
               <li>

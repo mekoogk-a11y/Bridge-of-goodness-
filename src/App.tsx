@@ -12,7 +12,6 @@ import { ArticlesView } from './views/ArticlesView';
 import { InvolvementView } from './views/InvolvementView';
 import { PolicyViews } from './views/PolicyViews';
 import { AdminDashboardView } from './views/AdminDashboardView';
-import { DonationView } from './views/DonationView';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
@@ -21,6 +20,7 @@ export default function App() {
   // Normalize aliases (e.g. 'education' -> 'area-education', 'projects' -> 'initiatives')
   const normalizePage = (raw: string): PageId => {
     switch (raw) {
+      case 'donate': return 'volunteers';
       case 'education': return 'area-education';
       case 'health': return 'area-health';
       case 'relief': return 'area-relief';
@@ -81,12 +81,7 @@ export default function App() {
           <HomeView onNavigate={handleNavigate} lang={lang} />
         )}
 
-        {/* 2. Dedicated Donation Route: /donate */}
-        {currentPage === 'donate' && (
-          <DonationView onNavigate={handleNavigate} lang={lang} />
-        )}
-
-        {/* 3. About Sub-pages */}
+        {/* 2. About Sub-pages */}
         {[
           'about',
           'story',
